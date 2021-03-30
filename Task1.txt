@@ -15,52 +15,21 @@ UUID=xxxxxxxx /mnt/data ext4 defaults 0 0
 ========================================================================================
 Part Two:
 
-[root@localhost ~]# useradd -u 601 user1
-[root@localhost ~]# passwd user1
-Changing password for user user1.
-New password:
-BAD PASSWORD: The password is shorter than 8 characters
-Retype new password:
-passwd: all authentication tokens updated successfully.
-[root@localhost ~]# groupadd TrainingGroup
-[root@localhost ~]# usermod user1 -g TrainingGroup
-[root@localhost ~]# id user1
-uid=601(user1) gid=1003(TrainingGroup) groups=1003(TrainingGroup)
-[root@localhost ~]#
-
-==>  The user's login shell should be non interactive. (no ssh access to server) :
-[root@localhost home]# vi /etc/ssh/sshd_config
-then add this line at the end of the file:
-DenyUsers user1
-then save file
-
-==> create user 2:
-[root@localhost home]# useradd -G adm user2
-[root@localhost home]# passwd user2
-Changing password for user user2.
-New password:
-BAD PASSWORD: The password is shorter than 8 characters
-Retype new password:
-passwd: all authentication tokens updated successfully.
-[root@localhost home]# id user2
-uid=1002(user2) gid=1004(user2) groups=1004(user2),4(adm)
-[root@localhost home]#
-
-==>create user 3:
-[root@localhost home]# useradd -G adm user3
-[root@localhost home]# passwd user3
-Changing password for user user3.
-New password:
-BAD PASSWORD: The password is shorter than 8 characters
-Retype new password:
-passwd: all authentication tokens updated successfully.
-[root@localhost home]# id user3
-uid=1003(user3) gid=1005(user3) groups=1005(user3),4(adm)
-[root@localhost home]#
+#useradd -u 601 -s /sbin/nologin user1
+#passwd user1
+#groupadd TrainingGroup
+#usermod -g TrainingGroup user1
+#groupadd admin
+#useradd -G admin user2
+#passwd user2
+#useradd -G admin user3
+#passwd user3
+#visudo
 
 ==> to make user3 with root permissions:
 1)visudo
 2)add <<user3 ALL = (ALL) ALL>> at the end of the file then save.
+
 
 ===============================================================================
 part Three:
@@ -88,6 +57,9 @@ The key's randomart image is:
 | oo..            |
 +----[SHA256]-----+
 [root@server ~]#ssh-copy-id -i /root/.ssh/id_rsa.pub user3@172.20.50.136
+[root@server ~]#vi /etc/ssh/sshd_config
+PasswordAuthentication no
+[root@server ~]#systemctl restart sshd.service
 [root@server ~]#ssh user3@172.20.50.136
 [user3@client]#
 ===================================================================================
@@ -100,8 +72,8 @@ cp /etc/fstab /var/tmp/admin
 ===================================================================================
 Part Five:
 
-#setenforce 1
-https://vceguide.com/create-a-volume-group-and-set-16m-as-a-extends-and-divided-a-volume-group-containing-50-extends-on-volume-group-lv-make-it-as-ext4-file-system-and-mounted-automatically-under-mntdata/
+#vim /etc/selinux/config
+SELINUX=enforcing ==>then save
 
 ====================================================================================
 Part Six:
@@ -173,7 +145,7 @@ ssh: ALL
 Part Nine:
 
 #crontab -e
-30 11 * * * /tmp/getusers.sh
+30 1 * * * /tmp/getusers.sh
 In /tmp/getusers.sh
 #!/bin/bash
 date=$(date)
