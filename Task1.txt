@@ -100,7 +100,6 @@ Part Seven:
 
 #yum install tmux
 #yum install httpd
-#yum install
 #sudo wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
 #sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm
 #sudo yum install mysql-server
@@ -119,7 +118,7 @@ gpgcheck=1
 
 #yum-config-manager --disablerepo=*
 #yum-config-manager --enable exalt.repo
-#yum install php php-pear php-cgi php-common php-mbstring php-snmp php-gd php-pecl-mysql php-xml php-mysql php-gettext php-bcmath
+#yum install php php-pear php-cgi php-common php-mbstring php-snmp php-gd php-xml php-mysql php-gettext php-bcmath
 #vim /etc/php.ini
 date.timezone = Asia/Palestine
 #yum install zabbix
