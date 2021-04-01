@@ -98,34 +98,28 @@ done
 ===============================================
 Part Seven:
 
+//I'am working on it
 #yum install tmux
 #yum install httpd
-#sudo wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
-#sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm
-#sudo yum install mysql-server
-#sudo systemctl start mysqld
-#sudo systemctl status mysqld
+#yum install mysql
 #yum install createrepo
-#mkdir /repo1
-#wget https://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/ -P /repo1
-#wget -A rpm -r -l 5  https://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/   -P /repo1
-#createrepo /repo1
-#vim /etc/yum.repos.d/exalt.repo
-[Exalt]
-name=Exalt Repository
-baseurl=http:file:///repo1/
-enabled=0
-gpgcheck=1
-
+#mkdir /repotest
+#wget -r -l1 https://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/ -P /repotest
+#createrepo /repotest
+#vi /etc/yum.repos.d/test.repo
+[testrepo]
+name=Test
+baseurl=file:///repotest/
+enabled=1
+gpgcheck=0
 #yum-config-manager --disablerepo=*
-#yum-config-manager --enable exalt.repo
-#yum install php php-pear php-cgi php-common php-mbstring php-snmp php-gd php-xml php-mysql php-gettext php-bcmath
-#vim /etc/php.ini
-date.timezone = Asia/Palestine
+#yum-config-manager --enable test.repo
 #yum install zabbix
 #yum install zabbix-web
+#yum install php
 #yum install zabbix-server
 #yum install zabbix-agent
+
 
 
 ==========================================================
